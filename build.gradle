@@ -5,30 +5,23 @@
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds
  */
 
-rootProject.buildDir = 'WebContent'
-
-
-task clean {
-    println "elimina " + rootProject.buildDir
-    delete rootProject.buildDir
+plugins {
+  id "com.bmuschko.tomcat" version "2.7.0"
 }
 
-task configure {
-    println "creo cartelle vuote"
-    new File("${rootProject.buildDir}/WEB-INF/classes/").mkdirs()
+repositories {
+    mavenCentral()
 }
 
-task build (type: Exec){
-    println "compilo "
-    dependsOn('copywebapp')
-    executable = "javac"
-    args = ["-cp", "lib/servlet-api.jar", "-d", "${rootProject.buildDir}/WEB-INF/classes/", "src/app/*.java"]
+dependencies {
+    def tomcatVersion = '8.5.16'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:8.5.2",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
 
-task copywebapp(type: Copy) {
-    println "copio webapp da src "
-    dependsOn('configure')
-    from 'src/webapp'
-    into rootProject.buildDir
-    include('**/*.html', '**/*.xml')
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    contextPath = '/servlet-annotation-example'
 }
