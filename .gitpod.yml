@@ -4,8 +4,4 @@
 
 tasks:
   - init: gradle build
-vscode:
-  extensions:
-    - redhat.java
-    - vscjava.vscode-java-debug
 

@@ -1,3 +1,4 @@
+package it.paleocapa.java;
 
 public class Greeting {
 

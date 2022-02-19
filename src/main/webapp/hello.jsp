@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<jsp:useBean id="greeting" class="Greeting"/>
+<jsp:useBean id="greeting" class="it.paleocapa.java.Greeting"/>
  
 <h3>${greeting.hello}</h3>
  
