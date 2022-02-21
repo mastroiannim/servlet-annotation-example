@@ -21,9 +21,21 @@ dependencies {
     compileOnly 'javax.servlet:javax.servlet-api:3.0.1'
 }
 
+task killAllJava {
+   doLast {
+       exec {
+            workingDir '.'
+            commandLine 'killall',  '-9', 'java'
+       }
+    }
+}
+
+tomcatStop.finalizedBy(killAllJava)
+
 tomcat {
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
     httpPort = 8000
     contextPath = '/'
+    daemon = false
 }
