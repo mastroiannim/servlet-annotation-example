@@ -10,7 +10,8 @@
 
 <jsp:useBean id="greeting" class="it.paleocapa.java.Greeting"/>
  
-<h3>${greeting.hello}</h3>
+<h3>${greeting.hello}!</h3>
+<p>ciao!</p>
  
 
 
