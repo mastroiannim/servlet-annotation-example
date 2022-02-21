@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Create Table (ucanaccess)</title>
+    <script>
+      var field = 0;
+      var selected = [];
+      function addField() {
+        for(var i=0;i<field;i++){ //mi salvo il selected index in un array
+          selected[i] = document.getElementById("field" + i + "type").selectedIndex;
+        }
+
+        //aggiungo un altro campo
+        document.getElementById("form").innerHTML += "<hr><label>Field " + field + ": </label><input type='text' name='field" + field + "name' onchange='setValue(this)'>&nbsp;<label>Type: </label><select name='field" + field + "type' id='field" + field + "type'  ><option value='text' selected='true'>Text</option><option value='numeric'>Numeric</option><option value='datetime'>Datetime</option></select>";
+
+        for(var i=0;i<field;i++){ //risetto il selected index dei vari select
+          document.getElementById("field" + i + "type").selectedIndex = selected[i];
+        }
+        field++;
+        document.getElementById("field").value = field;
+      }
+      function setValue(obj){ //Firefox (ma forse anche altri browser) non salva il value di un input field tramite l'attributo value, percio lo forzo nel codice HTML
+        obj.setAttribute("value", obj.value); //In questo modo evito che il valore del field venga perso in seguito ad una modifica dell'innerhtml.
+      }
+    </script>
+  </head>
+  <body>
+    <form action="response.jsp" method="post" id="form">
+      <button type="button" onclick="addField()">Add field</button>
+      <button type="submit">Submit</button>
+      <hr>
+      <input type="hidden" name="field" id="field" value="0" onchange="setValue(this)">
+      <label>Table name: </label>
+      <input type="text" name="name" onchange="setValue(this)">
+      <hr>
+      <label>Name of the Primary Key: </label>
+      <input type="text" name="primary" onchange="setValue(this)">
+    </form>
+  </body>
+</html>
